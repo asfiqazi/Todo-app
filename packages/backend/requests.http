@@ -1,0 +1,103 @@
+@baseUrl = http://localhost:3001
+@authToken = YOUR_JWT_TOKEN_HERE
+
+### Authentication Routes ###
+
+### Sign Up
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password123",
+    "name": "Test User"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+### Tasks Routes ###
+# Note: All task routes require authentication
+# Add the JWT token received from login to @authToken variable above
+
+### Get All Tasks
+GET {{baseUrl}}/tasks
+Authorization: Bearer {{authToken}}
+
+### Get Tasks with Filters
+GET {{baseUrl}}/tasks?status=PENDING&priority=HIGH
+Authorization: Bearer {{authToken}}
+
+### Create Task
+POST {{baseUrl}}/tasks
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "Sample Task",
+    "description": "This is a sample task description",
+    "priority": "HIGH",
+    "dueDate": "2025-01-20T10:00:00.000Z"
+}
+
+### Update Task
+PUT {{baseUrl}}/tasks/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "Updated Task Title",
+    "description": "Updated task description",
+    "priority": "MEDIUM",
+    "status": "COMPLETED",
+    "dueDate": "2025-01-25T10:00:00.000Z"
+}
+
+### Delete Task
+DELETE {{baseUrl}}/tasks/1
+Authorization: Bearer {{authToken}}
+
+### Sample Task Objects ###
+
+# Full Task Creation Object
+POST {{baseUrl}}/tasks
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "Important Meeting",
+    "description": "Quarterly review meeting with the team",
+    "priority": "HIGH",
+    "dueDate": "2025-01-15T14:00:00.000Z"
+}
+
+# Minimal Task Creation Object
+POST {{baseUrl}}/tasks
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "Quick Task"
+}
+
+# Update Task Status Only
+PUT {{baseUrl}}/tasks/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "status": "COMPLETED"
+}
+
+### Notes:
+# 1. Replace YOUR_JWT_TOKEN_HERE with the actual token received after login
+# 2. Task Priority options: LOW, MEDIUM, HIGH
+# 3. Task Status options: PENDING, COMPLETED
+# 4. Task IDs in URLs (e.g., /tasks/1) should be replaced with actual task IDs
+# 5. All dates should be in ISO format with timezone (e.g., "2025-01-15T14:00:00.000Z")
